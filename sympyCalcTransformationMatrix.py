@@ -69,31 +69,6 @@ with open("_0T5.txt", "w") as dill_file:
         dill_file.write(str(" | ".join(formatted)))
         dill_file.write("\n")
 
-JakobiTrans = Matrix([ [0 , 0 , 0, 0, 0],
-                      [0 , 0 , 0, 0, 0],
-                      [0 , 0 , 0, 0, 0]])
-JakobiRot = Matrix([ [0 , 0 , 0, 0, 0],
-                    [0 , 0 , 0, 0, 0],
-                    [0 , 0 , 0, 0, 0]])
-##calc 0rE
-
-TCPVec = Matrix([0, 0, 0, 1])
-_0rE = _0T5 * TCPVec
-
-###########Achse2########################
-_0r2 = _0T2.col(3) #4 Spalte
-pprint(_0r2)
-#_0r0 = Matrix([0], [0], [0], [1])
-_0e2 = _0T1.getTrans().col(2) #3 Spalte
-_0e2 = _0e2.row_del(3)
-print(type(_0e2))
-trans2 = _0e2.cross(_0rE.row_del(3) - _0r2.row_del(3)) #geht nur mit 3 Zeilen nicht 4
-trans2 = trans2.col_join(Matrix([1]))
-pprint(trans2)
-
-Jakobi = Matrix([ JakobiTrans,
-                  JakobiRot])
-pprint(Jakobi)
 ###############Überprüfung der Nulllage###########################
 
 #l2 = 0
@@ -113,7 +88,7 @@ l6 = 300
 _0t1 = dh.Cdh_trans(0,    l1+l3,    0,              200,     1,   0)
 _1t2 = dh.Cdh_rot(0,        l4,      0,              10,     1,   0)
 _2t3 = dh.Cdh_rot(0,        l5,      0,              10,     1,   0)
-_3t4 = dh.Cdh_rot(0,         0,      90,             10,     1,   910) 
+_3t4 = dh.Cdh_rot(0,         0,      90,             10,     1,   90) 
 _4t5 = dh.Cdh_rot(l6,        0,      0,              0,      1,   0) #Endeffektor
 _0t1.setZero()
 _1t2.setZero()
