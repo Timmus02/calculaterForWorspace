@@ -10,11 +10,13 @@ l4 = 600
 l5 = 600
 l6 = 300
 
-_0T1 = Cdh(np.array([0, 0]), l2, l1+l3, np.array([0, 0]))
-_1T2 = Cdh(np.array(["-q1", 0]), 0, l4, np.array([0, 0]))
-_2T3 = Cdh(np.array(["q2", 0]), 0, l5, np.array([0, 0]))
-_3T4 = Cdh(np.array(["q3", 90]), 0, 0, np.array([90, 0]))
-_4T5 = Cdh(np.array(["q4", 0]), l6, 0, np.array([0, 0]))
+q1, q2, q3, q4, l2 = symbols("q1 q2 q3 q4 l2")
+
+_0T1 = Cdh(np.array([0, 0]), l2, l1+l3, 0)
+_1T2 = Cdh(np.array(["-q1", 0]), 0, l4, 0)
+_2T3 = Cdh(np.array(["-q2", 0]), 0, l5, 0)
+_3T4 = Cdh(np.array(["-q3", 90]), 0, 0, 90)
+_4T5 = Cdh(np.array(["q4", 0]), l6, 0, 0)
 _0T2 = _0T1.getTrans() * _1T2.getTrans()
 _0T3 = _0T2 * _2T3.getTrans()
 _0T4 = _0T3 * _3T4.getTrans()
@@ -36,7 +38,7 @@ print("######0T5######")
 pprint(simplify(_0T5))
 
 #########Achse1##########################
-trans1, Or1 = clalcJacobiTrans("", 1)
+trans1, Or1 = calcJacobiTrans("", 1)
 ###########Achse2########################
 trans2, Or2 = calcJacobiRot(_0T5, _0T1.getTrans(), Matrix([0,0,0,1]), 0)
 #########Achse3########
@@ -50,3 +52,6 @@ print("######Jacobi######")
 Jacobi = Matrix([ [trans1, trans2, trans3, trans4, trans5],
                   [Or1, Or2, Or3, Or4, Or5]])
 pprint(simplify(Jacobi))
+Jacobi = Jacobi.subs([(l2,0), (q1,0), (q2,0), (q3,0),(q4,0)])
+print("######Jacobi mit Nulllage######")
+pprint(Jacobi)
