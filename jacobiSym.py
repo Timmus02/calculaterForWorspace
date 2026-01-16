@@ -1,14 +1,14 @@
-from sympy import symbols, Matrix, cos, sin, pprint, simplify
+from sympy import symbols, Matrix, cos, sin, pprint, simplify, solve
 import numpy as np
 from JacobiBibliothek import *
 
 l2 = "l2"
 
-l1 = 100
-l3 = 600
-l4 = 600
-l5 = 600
-l6 = 300
+l1 = 0.100
+l3 = 0.600
+l4 = 0.600
+l5 = 0.600
+l6 = 0.300
 
 q1, q2, q3, q4, l2 = symbols("q1 q2 q3 q4 l2")
 
@@ -52,6 +52,16 @@ print("######Jacobi######")
 Jacobi = Matrix([ [trans1, trans2, trans3, trans4, trans5],
                   [Or1, Or2, Or3, Or4, Or5]])
 pprint(simplify(Jacobi))
-Jacobi = Jacobi.subs([(l2,0), (q1,0), (q2,0), (q3,0),(q4,0)])
+Jacobi_Det = Jacobi
+Jacobi_Det.row_del(4) #3 Zeile geht nicht 0ler Spalte; 6Zeile geht nicht da 5,5 und 4,5 linear abh. sind
+
+Jacobi = Jacobi.subs([(l2,0), (q1, 0), (q2,0), (q3,0),(q4,0)]) #in rad
 print("######Jacobi mit Nulllage######")
 pprint(Jacobi)
+
+pprint(simplify(Jacobi_Det))
+Jacobi_Det = Jacobi_Det.det()
+Jacobi_Det = simplify(Jacobi_Det)
+print(Jacobi_Det)
+print(solve(Jacobi_Det, [q1, q2, q3])) #
+

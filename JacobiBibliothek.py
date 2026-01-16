@@ -1,6 +1,43 @@
 from sympy import symbols, Matrix, cos, sin, pprint, trigsimp, pi
 import numpy as np
 
+class EulerABC:
+    alpha = 0
+    beta = 0
+    phi = 0
+    verschiebung = Matrix()
+    rot = Matrix()
+    alpha, beta, phi = symbols("alpha beta phi")
+
+    def __init__(self, _alpha, _beta, _phi):
+        self.alpha = _alpha
+        self.beta = _beta
+        self.phi = _phi
+
+    def _clacRot(self):
+        if not type(self.phi) == np.str_:
+            phi = self._convertToRad(self.phi)
+        if not type(self.alpha) == np.str_:
+            alpha = self._convertToRad(self.alpha)
+        if not type(self.beta) == np.str_:
+            beta = self._convertToRad(self.beta)
+        self.rot=Matrix([
+            [cos(alpha)*cos(beta), cos(alpha)*sin(beta)*sin(phi)-sin(alpha)*cos(phi), cos(alpha)*sin(beta)*cos(phi)+sin(alpha)*sin(phi)],
+            [sin(alpha)*cos(beta), sin(alpha)*sin(beta)*sin(phi)+cos(alpha)*cos(phi), sin(alpha)*sin(beta)*cos(phi)-cos(alpha)*sin(phi)],
+            [-sin(beta),           cos(beta)*sin(phi),                                cos(beta)*cos(phi)]
+        ])
+    def _convertToRad(self, deg):
+        #print(type(deg))
+        if type(deg) == np.float16 or type(deg) == np.int64 or type(deg) == int:
+            return (pi/180)*deg
+        if type(deg) == np.str_:
+            if deg.isdigit():
+                return (pi/180)*float(deg) 
+        print("Wert nicht convertierbar in RAD")
+        exit()
+    def getRot(self):
+        return self.rot
+
 class Cdh:
     phi = np.empty(2)
     alpha = 0

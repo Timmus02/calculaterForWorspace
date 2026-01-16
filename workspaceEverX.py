@@ -41,6 +41,7 @@ def calc(_file):
         t = p.add_task("Processing...", total=_total)
         finished1 = False
         points = []
+        angle = []
         while not p.finished:
             
             if finished1 == False:
@@ -57,6 +58,7 @@ def calc(_file):
                                 testVec = np.matmul(_0t4, np.array([0, 0, 0, 1]))
                                 #print(testVec[:3])
                                 points.append(testVec[:3])
+                                angle.append(np.array([_0t1.getLength(), _1t2.getAngle(), _2t3.getAngle(), _3t4.getAngle(), _4t5.getAngle()]))
                                 p.update(t, advance=1)
                                 count += 1
                                 _3t4.makeStep()
@@ -91,5 +93,10 @@ def calc(_file):
         writer = csv.writer(file)
         writer.writerow(["x", "y", "z"])   # Kopfzeile
         writer.writerows(points)
+    with open(_file + "angles" + ".csv", mode="w", newline="") as file:
+        print(".")
+        writer = csv.writer(file)
+        writer.writerow(["l2", "q1", "q2", "q3", "q4"])   # Kopfzeile
+        writer.writerows(angle)
     main(_file + ".csv")
 

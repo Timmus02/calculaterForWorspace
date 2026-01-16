@@ -43,6 +43,8 @@ class Cdh_rot:
     def setAngle(self, _angle):
         self.phi = _angle
         self.__calcTrans()
+    def getAngle(self):
+        return self.phi
 
 class Cdh_trans:
     phi = 0
@@ -88,3 +90,5 @@ class Cdh_trans:
     def setDist(self, _dist):
         self.d = _dist
         self.__calcTrans()
+    def getLength(self):
+        return self.d
